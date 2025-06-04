@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un vol | BeauxAirlines{% endblock %}
+
+{% block body %}
+<main class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Ajouter un nouveau vol</h1>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            {{ form_start(form) }}
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+                <div class="rounded-md">
+                    {{ form_label(form.dateHeureDepart, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.dateHeureDepart, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.dateHeureDepart) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.dateHeureArrivee, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.dateHeureArrivee, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.dateHeureArrivee) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.avion, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.avion, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.avion) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.aeroportDepart, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.aeroportDepart, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.aeroportDepart) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.aeroportArrivee, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.aeroportArrivee, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.aeroportArrivee) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.pilote, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.pilote, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.pilote) }}
+                </div>
+            </div>
+
+            <div class="mb-6"></div>
+
+            <div class="flex justify-end space-x-4">
+                <a href="{{ path('app_vol') }}"
+                   class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Annuler
+                </a>
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                    Ajouter le vol
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</main>
+{% endblock %}

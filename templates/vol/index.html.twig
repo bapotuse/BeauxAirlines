@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vols | BeauxAirlines{% endblock %}
+
+{% block body %}
+<main class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Gestion des Vols</h1>
+        <a href="{{ path('app_vol_add')}}" 
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
+            Ajouter un vol
+        </a>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+        <form action="{{ path('app_vol') }}" method="get" class="space-y-4">
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label for="volSearch" class="block text-sm font-medium text-gray-700">Rechercher</label>
+                    <input type="text" id="volSearch" name="volSearch" value="{{ app.request.query.get('search') }}" placeholder="Entrez le numéro de vol, l'aéroport ou le nom du pilote"
+                        class="mt-1 block px-2 py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Rechercher
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro de Vol</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aéroport de départ</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aéroport d'arrivée</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pilote</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avion</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Heure de départ</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Heure d'arrivée</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Heure de départ effective</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Heure d'arrivée effective</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for vol in vols %}
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">#{{ vol.id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ vol.aeroportDepart.nom }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ vol.aeroportArrivee.nom }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ vol.pilote.matricule }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ vol.avion.modele }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ vol.dateHeureDepart ? vol.dateHeureDepart|date('d/m/Y H:i') : 'Non définie' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ vol.dateHeureArrivee ? vol.dateHeureArrivee|date('d/m/Y H:i') : 'Non définie' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ vol.dateHeureDepartEffective ? vol.dateHeureDepartEffective|date('d/m/Y H:i') : 'Pas encore parti' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ vol.dateHeureArriveeEffective ? vol.dateHeureArriveeEffective|date('d/m/Y H:i') : 'Pas encore parti' }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="{{ path('app_vol_edit', {'id': vol.id}) }}" class="text-blue-600 hover:text-blue-900 mr-3">Modifier</a>
+                                <a href="{{ path('app_vol_delete', {'id': vol.id}) }}" class="text-red-600 hover:text-red-900">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-gray-500">Aucun vol trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}

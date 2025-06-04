@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Vol | BeauxAirlines{% endblock %}
+
+{% block body %}
+<main class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Modifier le vol</h1>
+
+        <form method="post" action="{{ path('app_vol_edit', {'id': vol.id}) }}" class="space-y-6 bg-white shadow-lg rounded-lg p-6">
+            <div class="rounded-md">
+                <label for="dateHeureDepart" class="block text-sm font-medium text-gray-700">Date et heure de départ</label>
+                <input type="datetime-local" id="dateHeureDepart" name="dateHeureDepart"
+                       value="{{ vol.dateHeureDepart ? vol.dateHeureDepart|date('Y-m-d\TH:i') : '' }}" required
+                       class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="rounded-md">
+                <label for="dateHeureArrivee" class="block text-sm font-medium text-gray-700">Date et heure d'arrivée</label>
+                <input type="datetime-local" id="dateHeureArrivee" name="dateHeureArrivee"
+                       value="{{ vol.dateHeureArrivee ? vol.dateHeureArrivee|date('Y-m-d\TH:i') : '' }}" required
+                       class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="rounded-md">
+                <label for="dateHeureDepartEffective" class="block text-sm font-medium text-gray-700">Date et heure de départ effective</label>
+                <input type="datetime-local" id="dateHeureDepartEffective" name="dateHeureDepartEffective"
+                       value="{{ vol.dateHeureDepartEffective ? vol.dateHeureDepartEffective|date('Y-m-d\TH:i') : '' }}" required
+                       class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="rounded-md">
+                <label for="dateHeureArriveeEffective" class="block text-sm font-medium text-gray-700">Date et heure d'arrivée effective</label>
+                <input type="datetime-local" id="dateHeureArriveeEffective" name="dateHeureArriveeEffective"
+                       value="{{ vol.dateHeureArriveeEffective ? vol.dateHeureArriveeEffective|date('Y-m-d\TH:i') : '' }}" required
+                       class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="rounded-md">
+                <label for="avion" class="block text-sm font-medium text-gray-700">Avion</label>
+                <select id="avion" name="avion" required
+                        class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    {% for a in avions %}
+                        <option value="{{ a.id }}" {% if vol.avion and a.id == vol.avion.id %}selected{% endif %}>
+                            {{ a.modele }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="rounded-md">
+                <label for="aeroportDepart" class="block text-sm font-medium text-gray-700">Aéroport de départ</label>
+                <select id="aeroportDepart" name="aeroportDepart" required
+                        class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    {% for a in aeroports %}
+                        <option value="{{ a.id }}" {% if vol.aeroportDepart and a.id == vol.aeroportDepart.id %}selected{% endif %}>
+                            {{ a.nom }} - {{ a.ville }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="rounded-md">
+                <label for="aeroportArrivee" class="block text-sm font-medium text-gray-700">Aéroport d'arrivée</label>
+                <select id="aeroportArrivee" name="aeroportArrivee" required
+                        class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    {% for a in aeroports %}
+                        <option value="{{ a.id }}" {% if vol.aeroportArrivee and a.id == vol.aeroportArrivee.id %}selected{% endif %}>
+                            {{ a.nom }} - {{ a.ville }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="rounded-md">
+                <label for="pilote" class="block text-sm font-medium text-gray-700">Pilote</label>
+                <select id="pilote" name="pilote" required
+                        class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    {% for p in pilotes %}
+                        <option value="{{ p.matricule }}" {% if vol.pilote and p.matricule == vol.pilote.matricule %}selected{% endif %}>
+                            {{ p.nom }} {{ p.prenom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <a href="{{ path('app_vol') }}"
+                   class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Annuler
+                </a>
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                    Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

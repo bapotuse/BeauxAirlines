@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Gestion Aéroport{% endblock %}</title>
+    {{ encore_entry_link_tags('app') }}
+</head>
+<header class="bg-blue-800 text-white shadow">
+    {% if afficherNavbar is not defined or afficherNavbar %}
+        <div class="relative container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="{{ path('app_home') }}" class="text-2xl font-bold">Beaux Airlines</a>
+
+            <nav class="space-x-4 absolute left-1/2 transform -translate-x-1/2">
+                <a href="{{ path('app_aeroport') }}" class="hover:underline">Aéroports</a>
+                <a href="{{ path('app_pilote') }}" class="hover:underline">Pilotes</a>
+                <a href="{{ path('app_hangar') }}" class="hover:underline">Hangars</a>
+                <a href="{{ path('app_avion') }}" class="hover:underline">Avions</a>
+                <a href="{{ path('app_vol') }}" class="hover:underline">Vols</a>
+            </nav>
+
+            <div class="flex space-x-4">
+                <a href="{{ path('app_compte') }}" class="bg-blue-600 font-bold text-white px-4 py-2 rounded hover:bg-blue-700">Mon Compte</a>
+                <a href="{{ path('app_logout') }}" class="bg-red-600 font-bold text-white px-4 py-2 rounded hover:bg-red-700">Déconnexion</a>
+            </div>
+        </div>
+    {% endif %}
+</header>
+
+<body class="bg-gray-100 text-gray-900">
+    <main class="container mx-auto px-4 py-4">
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-message mb-4 p-4 rounded shadow 
+                    {{ label == 'success' ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-red-100 text-red-800 border border-red-300' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% block body %}{% endblock %}
+        
+    </main>
+
+    {{ encore_entry_script_tags('app') }}
+
+</body>
+
+</html>

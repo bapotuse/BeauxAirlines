@@ -1,0 +1,53 @@
+{% extends 'baseAth.html.twig' %}
+{% block title %}ATH | BeauxAirlines{% endblock %}
+
+{% block body %}
+<main class="w-screen h-screen p-0 m-0">
+    <div class="w-full h-full bg-white overflow-auto">
+        <table class="min-w-full h-full text-base text-gray-800 table-fixed">
+            <thead class="bg-gray-100 text-gray-700 text-lg sticky top-0">
+                <tr>
+                    <th class="px-6 py-4 text-left font-semibold uppercase w-1/4">Numéro de Vol</th>
+                    <th class="px-6 py-4 text-left font-semibold uppercase w-1/4">Aéroport d'arrivée</th>
+                    <th class="px-6 py-4 text-left font-semibold uppercase w-1/4">Avion</th>
+                    <th class="px-6 py-4 text-left font-semibold uppercase w-1/4">Date & Heure de départ</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-300">
+                {% for vol in vols %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-[10rem]">#{{ vol.id }}</td>
+                        <td class="px-6 py-4 text-[10rem]">{{ vol.aeroportArrivee.nom }}</td>
+                        <td class="px-6 py-4 text-[10rem]">{{ vol.avion.modele }}</td>
+                        <td class="px-6 py-4 text-[10rem]">
+                            {{ vol.dateHeureDepart ? vol.dateHeureDepart|date('d/m/Y H:i') : 'Non définie' }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-gray-500">Aucun vol trouvé.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% block javascripts %}
+<script>
+    setInterval(() => {
+        const currentUrl = window.location.pathname;
+        const regex = /\/ath(Aller|Retour)\/(\d+)/;
+        const match = currentUrl.match(regex);
+
+        if (match) {
+            const direction = match[1];
+            const id = match[2];
+            const nextDirection = direction === "Aller" ? "Retour" : "Aller";
+            window.location.href = `/ath${nextDirection}/${id}`;
+        }
+    }, 30000);
+</script>
+{% endblock %}
+
+{% endblock %}
