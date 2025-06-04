@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hangars | BeauxAirlines{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Gestion des Hangars</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for hangar in hangars %}
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">{{ hangar.nom }}</h2>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-gray-600"><span class="font-medium">Capacité :</span> {{ hangar.capacite }} avion(s) </p>
+                    <p class="text-gray-600"><span class="font-medium">Aéroport :</span> {{ hangar.aeroport.nom }} </p>
+                </div>
+                <div class="mt-2">
+                    {% set nbAvions = hangarCapacite[hangar.id] ?? 0 %}
+                    {% if hangar.capacite <= nbAvions %}
+                        <p class="text-red-500">Plein</p>
+                    {% else %}
+                        <p class="text-green-500">Disponible - {{ hangar.capacite - nbAvions }} place(s)</p>
+                    {% endif %}
+                </div>
+                <div class="mt-4 flex space-x-2">
+                    <a href="{{ path('app_hangar_avions', {'id': hangar.id}) }}" class="bg-gray-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Détails
+                    </a>
+                    <a href="{{ path('app_hangar_edit', {'id': hangar.id }) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Modifier
+                    </a>
+                    <a href="{{ path('app_hangar_delete', {'id': hangar.id}) }}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Supprimer
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="bg-white shadow-md rounded-lg p-6 flex items-center justify-center border-2 border border-gray-300">
+            <a href="{{ path('app_hangar_add') }}" 
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg flex items-center">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Ajouter un hangar
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

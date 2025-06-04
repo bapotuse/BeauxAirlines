@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Pilote | BeauxAirlines{% endblock %}
+
+{% block body %}
+<main class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Ajouter un nouveau pilote</h1>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-6">
+            {{ form_start(form) }}
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+
+                 <div class="rounded-md">
+                    {{ form_label(form.matricule, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.matricule, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.matricule) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.nom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="rounded-md">
+                    {{ form_label(form.prenom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                    {{ form_widget(form.prenom, {'attr': {'class': 'form-input w-full mt-1 border border-gray-300 rounded-md shadow-sm px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                    {{ form_errors(form.prenom) }}
+                </div>
+            </div>
+
+            <div class="mb-6"></div>
+
+            <div class="flex justify-end space-x-4 mt-6">
+                <a href="{{ path('app_pilote') }}"
+                   class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Annuler
+                </a>
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Créer le pilote
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Avion | BeauxAirlines{% endblock %}
+
+{% block body %}
+<main class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Modifier le avion</h1>
+
+       <form method="post" action="{{ path('app_avion_edit', {'id': avion.id}) }}" class="space-y-6 bg-white shadow-lg rounded-lg p-6">
+            <div class="rounded-md">
+                <label for="modele" class="block text-sm font-medium text-gray-700">Nom</label>
+                <input type="text" id="modele" name="modele" value="{{ avion.modele }}" required
+                    class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div class="rounded-md">
+                <label for="nbPlaces" class="block text-sm font-medium text-gray-700">Nombre de Places</label>
+                <input type="text" id="nbPlaces" name="nbPlaces" value="{{ avion.nbPlaces }}" required
+                    class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div class="rounded-md">
+                <label for="hangar" class="block text-sm font-medium text-gray-700">Hangar</label>
+                <select id="hangar" name="hangar" required
+                        class="mt-1 block px-2 py-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    {% for h in hangars %}
+                        <option value="{{ h.id }}" {% if avion.hangar and h.id == avion.hangar.id %}selected{% endif %}>
+                            {{ h.nom }}
+
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <a href="{{ path('app_avion') }}"
+                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Annuler
+                </a>
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                    Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avions dans {{ hangar.nom }}{% endblock %}
+
+{% block body %}
+<main class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Avions dans le hangar {{ hangar.nom }}</h1>
+
+        {% if avions is empty %}
+            <p class="text-gray-600">Aucun avion dans ce hangar.</p>
+        {% else %}
+            <ul class="divide-y divide-gray-200">
+                {% for avion in avions %}
+                    <li class="py-4">
+                        <p class="text-lg font-semibold">{{ avion.modele }}</p>
+                        <p class="text-sm text-gray-500">Places : {{ avion.nbPlaces }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="mt-6">
+            <a href="{{ path('app_hangar') }}"
+               class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                ← Retour aux hangars
+            </a>
+        </div>
+    </div>
+</main>
+{% endblock %}
